@@ -4,6 +4,7 @@ import (
 	"bytes"
 )
 
+// toNGrams will convert inbound data to an NGram of provided size
 func toNGrams(in string, size int) (ns []NGram) {
 	// Initialize NGram with a provided size
 	n := make(NGram, size)
