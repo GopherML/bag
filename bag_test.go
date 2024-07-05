@@ -5,7 +5,10 @@ import (
 	"testing"
 )
 
-var exampleBag *Bag
+var (
+	exampleBag     *Bag
+	exampleResults Results
+)
 
 func TestBag(t *testing.T) {
 	trainings := []training{
@@ -126,7 +129,13 @@ func ExampleBag_Train() {
 }
 
 func ExampleBag_GetResults() {
-	exampleBag.GetResults("I am very happy with this product.")
+	exampleResults = exampleBag.GetResults("I am very happy with this product.")
+	fmt.Println("Collection of results", exampleResults)
+}
+
+func ExampleResults_GetHighestProbability() {
+	match := exampleResults.GetHighestProbability()
+	fmt.Println("Highest probability", match)
 }
 
 type training struct {
