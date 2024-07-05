@@ -6,16 +6,16 @@ func New(c Config) *Bag {
 	var b Bag
 	c.fill()
 	b.c = c
-	b.labels = map[string]Vocabulary{}
+	b.vocabByLabel = map[string]Vocabulary{}
 	b.countByLabel = map[string]int{}
 	return &b
 }
 
 type Bag struct {
+	// Configuration values
 	c Config
-
-	labels map[string]Vocabulary
-
+	// Vocabulary sets by label
+	vocabByLabel map[string]Vocabulary
 	// Count of trained documents by label
 	countByLabel map[string]int
 	// Total count of trained documents
@@ -24,9 +24,9 @@ type Bag struct {
 
 func (b *Bag) GetSentiment(in string) (r Results) {
 	ns := toNGrams(in, b.c.NGramSize)
-	r = make(Results, len(b.labels))
+	r = make(Results, len(b.vocabByLabel))
 
-	for label, vocab := range b.labels {
+	for label, vocab := range b.vocabByLabel {
 		r[label] = b.getProbability(ns, label, vocab)
 	}
 
@@ -75,10 +75,10 @@ func (b *Bag) getPriorProbability(label string) (probability float64) {
 
 func (b *Bag) getOrCreateVocabulary(label string) (v Vocabulary) {
 	var ok bool
-	v, ok = b.labels[label]
+	v, ok = b.vocabByLabel[label]
 	if !ok {
 		v = make(Vocabulary)
-		b.labels[label] = v
+		b.vocabByLabel[label] = v
 	}
 
 	return
