@@ -1,3 +1,3 @@
 package bag
 
-type Vocabulary map[Trigram]int
+type Vocabulary map[string]int

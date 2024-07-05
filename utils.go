@@ -22,6 +22,4 @@ func toWords(in string, onWord func(string)) {
 		onWord(buf.String())
 		buf.Reset()
 	}
-
-	return
 }
