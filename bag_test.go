@@ -5,10 +5,7 @@ import (
 	"testing"
 )
 
-type training struct {
-	Input string
-	Label string
-}
+var exampleBag *Bag
 
 func TestBag(t *testing.T) {
 	trainings := []training{
@@ -111,4 +108,28 @@ func testBag(t *testing.T, trainings, tests []training, cfg Config) {
 
 		fmt.Printf("Document: %s\nMatch: %v\nResults: %v\n\n", test.Input, results.GetHighestProbability(), results)
 	}
+}
+
+func ExampleNew() {
+	var cfg Config
+	// Initialize with default values
+	exampleBag = New(cfg)
+}
+
+func ExampleBag_Train() {
+	exampleBag.Train("I love this product, it is amazing!", "positive")
+	exampleBag.Train("This is the worst thing ever.", "negative")
+	exampleBag.Train("I am very happy with this.", "positive")
+	exampleBag.Train("I hate this so much.", "negative")
+	exampleBag.Train("Not good", "negative")
+	exampleBag.Train("Very good", "negative")
+}
+
+func ExampleBag_GetResults() {
+	exampleBag.GetResults("I am very happy with this product.")
+}
+
+type training struct {
+	Input string
+	Label string
 }
