@@ -16,6 +16,8 @@ func TestBag(t *testing.T) {
 		{Input: "This is the worst thing ever.", Label: "negative"},
 		{Input: "I am very happy with this.", Label: "positive"},
 		{Input: "I hate this so much.", Label: "negative"},
+		{Input: "Not good", Label: "negative"},
+		{Input: "Very good", Label: "negative"},
 	}
 
 	// Test documents
@@ -24,84 +26,89 @@ func TestBag(t *testing.T) {
 		{Input: "This is the worst purchase I have ever made.", Label: "negative"},
 	}
 
-	testBag(t, trainings, tests)
+	testBag(t, trainings, tests, Config{})
 }
 
 func TestBag_yesno(t *testing.T) {
 	trainings := []training{
-		{Input: "Yes", Label: "positive"},
-		{Input: "Yeah", Label: "positive"},
-		{Input: "Yep", Label: "positive"},
-		{Input: "Yup", Label: "positive"},
-		{Input: "Yea", Label: "positive"},
-		{Input: "Sure", Label: "positive"},
-		{Input: "Absolutely", Label: "positive"},
-		{Input: "Definitely", Label: "positive"},
-		{Input: "Of course", Label: "positive"},
-		{Input: "For sure", Label: "positive"},
-		{Input: "Indeed", Label: "positive"},
-		{Input: "Affirmative", Label: "positive"},
-		{Input: "Roger", Label: "positive"},
-		{Input: "Totally", Label: "positive"},
-		{Input: "Certainly", Label: "positive"},
-		{Input: "Without a doubt", Label: "positive"},
-		{Input: "You bet", Label: "positive"},
-		{Input: "Uh-huh", Label: "positive"},
-		{Input: "Right on", Label: "positive"},
-		{Input: "Cool", Label: "positive"},
-		{Input: "Okie dokie", Label: "positive"},
-		{Input: "Aye", Label: "positive"},
-		{Input: "Yass", Label: "positive"},
-		{Input: "Fo sho", Label: "positive"},
-		{Input: "Bet", Label: "positive"},
-		{Input: "10-4", Label: "positive"},
-		{Input: "No", Label: "negative"},
-		{Input: "Nope", Label: "negative"},
-		{Input: "Nah", Label: "negative"},
-		{Input: "Nuh-uh", Label: "negative"},
-		{Input: "No way", Label: "negative"},
-		{Input: "Not at all", Label: "negative"},
-		{Input: "Negative", Label: "negative"},
-		{Input: "Not really", Label: "negative"},
-		{Input: "I don't think so", Label: "negative"},
-		{Input: "Absolutely not", Label: "negative"},
-		{Input: "No chance", Label: "negative"},
-		{Input: "No way, José", Label: "negative"},
-		{Input: "Out of the question", Label: "negative"},
-		{Input: "By no means", Label: "negative"},
-		{Input: "Under no circumstances", Label: "negative"},
-		{Input: "Never", Label: "negative"},
-		{Input: "Not in a million years", Label: "negative"},
-		{Input: "Not happening", Label: "negative"},
-		{Input: "No can do", Label: "negative"},
-		{Input: "Not on your life", Label: "negative"},
-		{Input: "Hell no", Label: "negative"},
-		{Input: "Nah fam", Label: "negative"},
-		{Input: "Pass", Label: "negative"},
-		{Input: "Hard pass", Label: "negative"},
-		{Input: "Nopey dopey", Label: "negative"},
-		{Input: "Nix", Label: "negative"},
+		{Input: "Yes", Label: "yes"},
+		{Input: "Yeah", Label: "yes"},
+		{Input: "Yep", Label: "yes"},
+		{Input: "Yup", Label: "yes"},
+		{Input: "Yea", Label: "yes"},
+		{Input: "Sure", Label: "yes"},
+		{Input: "Absolutely", Label: "yes"},
+		{Input: "Definitely", Label: "yes"},
+		{Input: "Of course", Label: "yes"},
+		{Input: "For sure", Label: "yes"},
+		{Input: "Indeed", Label: "yes"},
+		{Input: "Affirmative", Label: "yes"},
+		{Input: "Roger", Label: "yes"},
+		{Input: "Totally", Label: "yes"},
+		{Input: "Certainly", Label: "yes"},
+		{Input: "Without a doubt", Label: "yes"},
+		{Input: "You bet", Label: "yes"},
+		{Input: "Uh-huh", Label: "yes"},
+		{Input: "Right on", Label: "yes"},
+		{Input: "Cool", Label: "yes"},
+		{Input: "Okie dokie", Label: "yes"},
+		{Input: "Aye", Label: "yes"},
+		{Input: "Yass", Label: "yes"},
+		{Input: "Fo sho", Label: "yes"},
+		{Input: "Bet", Label: "yes"},
+		{Input: "10-4", Label: "yes"},
+		{Input: "No", Label: "no"},
+		{Input: "Nope", Label: "no"},
+		{Input: "Nah", Label: "no"},
+		{Input: "Nuh-uh", Label: "no"},
+		{Input: "No way", Label: "no"},
+		{Input: "Not at all", Label: "no"},
+		{Input: "no", Label: "no"},
+		{Input: "Not really", Label: "no"},
+		{Input: "I don't think so", Label: "no"},
+		{Input: "Absolutely not", Label: "no"},
+		{Input: "No chance", Label: "no"},
+		{Input: "No way, José", Label: "no"},
+		{Input: "Out of the question", Label: "no"},
+		{Input: "By no means", Label: "no"},
+		{Input: "Under no circumstances", Label: "no"},
+		{Input: "Never", Label: "no"},
+		{Input: "Not in a million years", Label: "no"},
+		{Input: "Not happening", Label: "no"},
+		{Input: "No can do", Label: "no"},
+		{Input: "Not on your life", Label: "no"},
+		{Input: "Hell no", Label: "no"},
+		{Input: "Nah fam", Label: "no"},
+		{Input: "Pass", Label: "no"},
+		{Input: "Hard pass", Label: "no"},
+		{Input: "Nopey dopey", Label: "no"},
+		{Input: "Nix", Label: "no"},
 	}
 
 	// Test documents
 	tests := []training{
-		{Input: "Yep", Label: "positive"},
-		{Input: "Oh yes", Label: "positive"},
-		{Input: "Oh no", Label: "negative"},
+		{Input: "Yep", Label: "yes"},
+		{Input: "Oh yes", Label: "yes"},
+		{Input: "Oh no", Label: "no"},
 	}
 
-	testBag(t, trainings, tests)
+	testBag(t, trainings, tests, Config{NGramSize: 1})
 }
 
-func testBag(_ *testing.T, trainings, tests []training) {
-	b := New()
+func testBag(t *testing.T, trainings, tests []training, cfg Config) {
+	b := New(cfg)
 	for _, training := range trainings {
 		b.Train(training.Input, training.Label)
 	}
 
 	// Analyze sentiment
 	for _, test := range tests {
-		labels := b.GetSeniment(test.Input)
-		fmt.Printf("Document: %s\nSentiment: %v\n\n", test.Input, labels)
+		results := b.GetSentiment(test.Input)
+		got := results.GetHighestProbability()
+		if got != test.Label {
+			t.Fatalf("invalid label, expected <%s> and received <%s>", test.Label, got)
+		}
+
+		fmt.Printf("Document: %s\nMatch: %v\nResults: %v\n\n", test.Input, results.GetHighestProbability(), results)
 	}
 }
