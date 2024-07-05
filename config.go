@@ -6,16 +6,20 @@ const (
 )
 
 type Config struct {
-	NGramSize          int
+	// NGramSize represents the NGram size (unigram, bigram, trigram, etc - default is trigram)
+	NGramSize int
+	// SmoothingParameter represents the smoothing value used for the Laplace Smoothing (default is 1)
 	SmoothingParameter int
 }
 
 func (c *Config) fill() {
 	if c.NGramSize == 0 {
+		// NGramSize doesn't exist, set to default
 		c.NGramSize = DefaultNGramSize
 	}
 
 	if c.SmoothingParameter == 0 {
+		// SmoothingParameter doesn't exist, set to default
 		c.SmoothingParameter = DefaultSmoothingParameter
 	}
 }
