@@ -1,7 +1,9 @@
 package bag
 
 const (
-	DefaultNGramSize          = 3
+	// DefaultNGramSize is set to 3 (trigram)
+	DefaultNGramSize = 3
+	// DefaultSmoothingParameter is set to 1 (common Laplace smoothing value)
 	DefaultSmoothingParameter = 1
 )
 
