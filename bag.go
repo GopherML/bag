@@ -22,7 +22,7 @@ type Bag struct {
 	totalCount int
 }
 
-func (b *Bag) GetSentiment(in string) (r Results) {
+func (b *Bag) GetResults(in string) (r Results) {
 	ns := toNGrams(in, b.c.NGramSize)
 	r = make(Results, len(b.vocabByLabel))
 

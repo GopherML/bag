@@ -103,7 +103,7 @@ func testBag(t *testing.T, trainings, tests []training, cfg Config) {
 
 	// Analyze sentiment
 	for _, test := range tests {
-		results := b.GetSentiment(test.Input)
+		results := b.GetResults(test.Input)
 		got := results.GetHighestProbability()
 		if got != test.Label {
 			t.Fatalf("invalid label, expected <%s> and received <%s>", test.Label, got)
