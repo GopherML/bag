@@ -1,8 +1,6 @@
 package bag
 
-import (
-	"bytes"
-)
+import "bytes"
 
 // toNGrams will convert inbound data to an NGram of provided size
 func toNGrams(in string, size int) (ns []NGram) {
