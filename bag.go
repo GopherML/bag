@@ -4,10 +4,11 @@ import "math"
 
 func New(c Config) *Bag {
 	var b Bag
-	c.fill()
 	b.c = c
 	b.vocabByLabel = map[string]Vocabulary{}
 	b.countByLabel = map[string]int{}
+	// Fill unset values as default
+	b.c.fill()
 	return &b
 }
 
@@ -23,10 +24,13 @@ type Bag struct {
 }
 
 func (b *Bag) GetResults(in string) (r Results) {
+	// Convert inbound data to NGrams
 	ns := toNGrams(in, b.c.NGramSize)
+	// Initialize results with the same size as the current number of vocabulary labels
 	r = make(Results, len(b.vocabByLabel))
-
+	// Iterate through vocabulary sets by label
 	for label, vocab := range b.vocabByLabel {
+		// Set probability value for iterating label
 		r[label] = b.getProbability(ns, label, vocab)
 	}
 
@@ -70,14 +74,18 @@ func (b *Bag) getProbability(ns []NGram, label string, vocab Vocabulary) (probab
 func (b *Bag) getPriorProbability(label string) (probability float64) {
 	count := float64(b.countByLabel[label])
 	total := float64(b.totalCount)
+	// Get the logarithmic value of count divided by total count
 	return math.Log(count / total)
 }
 
 func (b *Bag) getOrCreateVocabulary(label string) (v Vocabulary) {
 	var ok bool
 	v, ok = b.vocabByLabel[label]
+	// Check if vocabulary set does not exist for the provided label
 	if !ok {
+		// Create new vocabulary set
 		v = make(Vocabulary)
+		// Set vocabulary set by label as newly created value
 		b.vocabByLabel[label] = v
 	}
 
