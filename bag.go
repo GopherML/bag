@@ -54,6 +54,7 @@ func (b *Bag) Train(in, label string) {
 	b.totalCount++
 }
 
+// getProbability uses a Naive Bayes classifier to determine probability for a given label
 func (b *Bag) getProbability(ns []NGram, label string, vocab Vocabulary) (probability float64) {
 	// Set initial probability value as the prior probability value
 	probability = b.getPriorProbability(label)
