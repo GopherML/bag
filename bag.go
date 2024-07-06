@@ -12,6 +12,15 @@ func New(c Config) *Bag {
 	return &b
 }
 
+func NewFromTrainingSet(t TrainingSet) *Bag {
+	b := New(t.Config)
+	for _, s := range t.Samples {
+		b.Train(s.Input, s.Label)
+	}
+
+	return b
+}
+
 type Bag struct {
 	// Configuration values
 	c Config
