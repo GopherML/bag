@@ -41,3 +41,10 @@ func ExampleResults_GetHighestProbability() {
 	fmt.Println("Highest probability", match)
 }
 ```
+
+## Road to v1.0.0
+[X] Working implementation as Go library
+[ ] Text normalization added to inbound text processing
+[ ] Training sets
+[ ] CLI utility
+[ ] Generated model as MMAP file
