@@ -10,8 +10,8 @@ var (
 	exampleResults Results
 )
 
-func TestBag(t *testing.T) {
-	trainings := []training{
+func TestBag_GetResults(t *testing.T) {
+	positiveNegative := []Sample{
 		{Input: "I love this product, it is amazing!", Label: "positive"},
 		{Input: "This is the worst thing ever.", Label: "negative"},
 		{Input: "I am very happy with this.", Label: "positive"},
@@ -20,17 +20,7 @@ func TestBag(t *testing.T) {
 		{Input: "Very good", Label: "negative"},
 	}
 
-	// Test documents
-	tests := []training{
-		{Input: "I am very happy with this product.", Label: "positive"},
-		{Input: "This is the worst purchase I have ever made.", Label: "negative"},
-	}
-
-	testBag(t, trainings, tests, Config{})
-}
-
-func TestBag_yesno(t *testing.T) {
-	trainings := []training{
+	yesNo := []Sample{
 		{Input: "Yes", Label: "yes"},
 		{Input: "Yeah", Label: "yes"},
 		{Input: "Yep", Label: "yes"},
@@ -85,32 +75,83 @@ func TestBag_yesno(t *testing.T) {
 		{Input: "Nix", Label: "no"},
 	}
 
-	// Test documents
-	tests := []training{
-		{Input: "Yep", Label: "yes"},
-		{Input: "Oh yes", Label: "yes"},
-		{Input: "Oh no", Label: "no"},
+	type fields struct {
+		t TrainingSet
 	}
 
-	testBag(t, trainings, tests, Config{NGramSize: 1})
-}
-
-func testBag(t *testing.T, trainings, tests []training, cfg Config) {
-	b := New(cfg)
-	for _, training := range trainings {
-		b.Train(training.Input, training.Label)
+	type args struct {
+		in string
 	}
 
-	// Analyze sentiment
-	for _, test := range tests {
-		results := b.GetResults(test.Input)
-		got := results.GetHighestProbability()
-		if got != test.Label {
-			t.Fatalf("invalid label, expected <%s> and received <%s>", test.Label, got)
-		}
+	type testcase struct {
+		name      string
+		fields    fields
+		args      args
+		wantMatch string
+	}
 
-		// Uncomment to get debug values of probability outputs
-		// fmt.Printf("Document: %s\nMatch: %v\nResults: %v\n\n", test.Input, results.GetHighestProbability(), results)
+	tests := []testcase{
+		{
+			name: "positive",
+			fields: fields{
+				t: TrainingSet{
+					Samples: positiveNegative,
+				},
+			},
+			args: args{
+				in: "I am very happy with this product.",
+			},
+			wantMatch: "positive",
+		},
+		{
+			name: "negative",
+			fields: fields{
+				t: TrainingSet{
+					Samples: positiveNegative,
+				},
+			},
+			args: args{
+				in: "This is the worst purchase I have ever made.",
+			},
+			wantMatch: "negative",
+		},
+		{
+			name: "yes",
+			fields: fields{
+				t: TrainingSet{
+					Samples: yesNo,
+				},
+			},
+			args: args{
+				in: "Oh yes.",
+			},
+			wantMatch: "yes",
+		},
+		{
+			name: "no",
+			fields: fields{
+				t: TrainingSet{
+					Config: Config{
+						NGramSize: 1,
+					},
+					Samples: yesNo,
+				},
+			},
+			args: args{
+				in: "Oh no.",
+			},
+			wantMatch: "no",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			b := NewFromTrainingSet(tt.fields.t)
+			gotR := b.GetResults(tt.args.in).GetHighestProbability()
+			if gotR != tt.wantMatch {
+				t.Errorf("Bag.GetResults() = %v, want %v", gotR, tt.wantMatch)
+			}
+		})
 	}
 }
 
@@ -137,9 +178,4 @@ func ExampleBag_GetResults() {
 func ExampleResults_GetHighestProbability() {
 	match := exampleResults.GetHighestProbability()
 	fmt.Println("Highest probability", match)
-}
-
-type training struct {
-	Input string
-	Label string
 }
