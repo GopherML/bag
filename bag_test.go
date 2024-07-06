@@ -109,7 +109,8 @@ func testBag(t *testing.T, trainings, tests []training, cfg Config) {
 			t.Fatalf("invalid label, expected <%s> and received <%s>", test.Label, got)
 		}
 
-		fmt.Printf("Document: %s\nMatch: %v\nResults: %v\n\n", test.Input, results.GetHighestProbability(), results)
+		// Uncomment to get debug values of probability outputs
+		// fmt.Printf("Document: %s\nMatch: %v\nResults: %v\n\n", test.Input, results.GetHighestProbability(), results)
 	}
 }
 
