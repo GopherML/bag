@@ -9,9 +9,9 @@ const (
 
 type Config struct {
 	// NGramSize represents the NGram size (unigram, bigram, trigram, etc - default is trigram)
-	NGramSize int
+	NGramSize int `toml:"ngram-size"`
 	// SmoothingParameter represents the smoothing value used for the Laplace Smoothing (default is 1)
-	SmoothingParameter int
+	SmoothingParameter int `toml:"smoothing-parameter"`
 }
 
 func (c *Config) fill() {
