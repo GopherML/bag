@@ -14,6 +14,23 @@ func ExampleNew() {
 }
 ```
 
+### NewFromTrainingSet
+```go
+func ExampleNewFromTrainingSet() {
+	var t TrainingSet
+	t.Samples = []Sample{
+		{Input: "I love this product, it is amazing!", Label: "positive"},
+		{Input: "This is the worst thing ever.", Label: "negative"},
+		{Input: "I am very happy with this.", Label: "positive"},
+		{Input: "I hate this so much.", Label: "negative"},
+		{Input: "Not good", Label: "negative"},
+		{Input: "Very good", Label: "negative"},
+	}
+	// Initialize with default values
+	exampleBag = NewFromTrainingSet(t)
+}
+```
+
 ### Bag.Train
 ```go
 func ExampleBag_Train() {
