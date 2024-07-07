@@ -46,6 +46,7 @@ func ExampleResults_GetHighestProbability() {
 
 - [X] Working implementation as Go library
 - [ ] Text normalization added to inbound text processing
+- [ ] Support Character NGrams
 - [ ] Training sets
 - [ ] CLI utility
 - [ ] Generated model as MMAP file
