@@ -18,14 +18,20 @@ func ExampleNew() {
 ```go
 func ExampleNewFromTrainingSet() {
 	var t TrainingSet
-	t.Samples = []Sample{
-		{Input: "I love this product, it is amazing!", Label: "positive"},
-		{Input: "This is the worst thing ever.", Label: "negative"},
-		{Input: "I am very happy with this.", Label: "positive"},
-		{Input: "I hate this so much.", Label: "negative"},
-		{Input: "Not good", Label: "negative"},
-		{Input: "Very good", Label: "negative"},
+	t.Samples = SamplesByLabel{
+		"positive": {
+			"I love this product, it is amazing!",
+			"I am very happy with this.",
+			"Very good",
+		},
+
+		"negative": {
+			"This is the worst thing ever.",
+			"I hate this so much.",
+			"Not good",
+		},
 	}
+
 	// Initialize with default values
 	exampleBag = NewFromTrainingSet(t)
 }
@@ -57,6 +63,24 @@ func ExampleResults_GetHighestProbability() {
 	match := exampleResults.GetHighestProbability()
 	fmt.Println("Highest probability", match)
 }
+```
+
+### TrainingSet File
+```yaml
+config:
+  ngram-size: 1
+samples:
+  yes:
+    - "yes"
+    - "Yeah"
+    - "Yep"
+
+  no:
+    - "No"
+    - "Nope"
+    - "Nah"
+
+# Note: This training set is short for the sake of README filesize, please look in the examples directory for more complete examples
 ```
 
 ## Road to v1.0.0
