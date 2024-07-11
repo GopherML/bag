@@ -80,8 +80,8 @@ samples:
     - "Nope"
     - "Nah"
 
-# Note: This training set is short for the sake of README filesize, please look in the
-# examples directory for more complete examples
+# Note: This training set is short for the sake of README filesize,
+# please look in the examples directory for more complete examples
 ```
 
 ## Road to v1.0.0
