@@ -11,7 +11,7 @@ var (
 )
 
 func TestBag_GetResults(t *testing.T) {
-	positiveNegative := map[string][]string{
+	positiveNegative := SamplesByLabel{
 		"positive": {
 			"I love this product, it is amazing!",
 			"I am very happy with this.",
@@ -25,7 +25,7 @@ func TestBag_GetResults(t *testing.T) {
 		},
 	}
 
-	yesNo := map[string][]string{
+	yesNo := SamplesByLabel{
 		"yes": {
 			"Yes",
 			"Yeah",
@@ -172,7 +172,7 @@ func ExampleNew() {
 
 func ExampleNewFromTrainingSet() {
 	var t TrainingSet
-	t.Samples = map[string][]string{
+	t.Samples = SamplesByLabel{
 		"positive": {
 			"I love this product, it is amazing!",
 			"I am very happy with this.",
