@@ -14,8 +14,10 @@ func New(c Config) *Bag {
 
 func NewFromTrainingSet(t TrainingSet) *Bag {
 	b := New(t.Config)
-	for _, s := range t.Samples {
-		b.Train(s.Input, s.Label)
+	for label, samples := range t.Samples {
+		for _, sample := range samples {
+			b.Train(sample, label)
+		}
 	}
 
 	return b
