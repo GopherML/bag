@@ -1,7 +1,11 @@
 package bag
 
 type TrainingSet struct {
-	Config
+	Config `yaml:"config"`
 
-	Samples []Sample `toml:"samples"`
+	Samples SamplesByLabel `yaml:"samples"`
 }
+
+type SamplesByLabel map[string]Samples
+
+type Samples []string
