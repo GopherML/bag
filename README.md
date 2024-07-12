@@ -90,5 +90,5 @@ samples:
 - [X] Training sets
 - [ ] Support Character NGrams
 - [ ] Text normalization added to inbound text processing
-- [ ] CLI utility
+- [X] CLI utility
 - [ ] Generated model as MMAP file
