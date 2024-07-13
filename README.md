@@ -88,7 +88,9 @@ samples:
 
 - [X] Working implementation as Go library
 - [X] Training sets
-- [ ] Support Character NGrams
+- [X] Support Character NGrams
 - [ ] Text normalization added to inbound text processing
 - [X] CLI utility
+
+## Long term goals
 - [ ] Generated model as MMAP file
