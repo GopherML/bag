@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"os"
 
@@ -33,8 +32,6 @@ func main() {
 		log.Fatalf("error loading training set: %v\n", err)
 		return
 	}
-
-	fmt.Printf("TS: %+v\n", t)
 
 	a.interactivePrint("Training set loaded\n")
 	if a.b, err = bag.NewFromTrainingSet(t); err != nil {
