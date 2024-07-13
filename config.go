@@ -17,7 +17,7 @@ type Config struct {
 	// NGramType represents the NGram type (word or character - default is word)
 	NGramType string `yaml:"ngram-type"`
 	// SmoothingParameter represents the smoothing value used for the Laplace Smoothing (default is 1)
-	SmoothingParameter int `yaml:"smoothing-parameter"`
+	SmoothingParameter float64 `yaml:"smoothing-parameter"`
 }
 
 func (c *Config) Validate() (err error) {
