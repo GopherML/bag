@@ -43,7 +43,7 @@ type Bag struct {
 
 func (b *Bag) GetResults(in string) (r Results) {
 	// Convert inbound data to NGrams
-	ns := toNGrams(in, b.c.NGramSize)
+	ns := b.toNGrams(in)
 	// Initialize results with the same size as the current number of vocabulary labels
 	r = make(Results, len(b.vocabByLabel))
 	// Iterate through vocabulary sets by label
