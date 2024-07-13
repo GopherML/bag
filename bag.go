@@ -84,12 +84,13 @@ func (b *Bag) getProbability(ns []string, label string, vocab Vocabulary) (proba
 	// Set initial probability value as the prior probability value
 	probability = b.getPriorProbability(label)
 	// Get the current counts by label (to be used by Laplace smoothing during for-loop)
-	countsByLabel := float64(b.countByLabel[label] + len(vocab))
+	countsByLabel := float64(b.countByLabel[label]) + b.c.SmoothingParameter*float64(len(vocab))
+
 	// Iterate through NGrams
 	for _, n := range ns {
 		// Utilize Laplace smoothing to improve our results when an ngram isn't found within the trained dataset
 		// Likelihood with Laplace smoothing
-		count := float64(vocab[n] + b.c.SmoothingParameter)
+		count := float64(vocab[n]) + b.c.SmoothingParameter
 		// Add logarithmic result of count (plus )
 		probability += math.Log(count / countsByLabel)
 	}
