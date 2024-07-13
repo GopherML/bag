@@ -199,7 +199,6 @@ func TestBag_GetResults(t *testing.T) {
 			gotR := b.GetResults(tt.args.in).GetHighestProbability()
 			if gotR != tt.wantMatch {
 				t.Errorf("Bag.GetResults() = wrong value for <%v>: %v, want %v", tt.args.in, gotR, tt.wantMatch)
-				fmt.Printf("%+v\n", b.vocabByLabel)
 				fmt.Println(b.GetResults(tt.args.in))
 			}
 		})
