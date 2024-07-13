@@ -2,13 +2,115 @@ package bag
 
 import (
 	"fmt"
+	"log"
+	"os"
 	"testing"
+
+	"github.com/go-yaml/yaml"
 )
 
 var (
 	exampleBag     *Bag
 	exampleResults Results
 )
+
+var (
+	testTrainingYesNo TrainingSet
+)
+
+func TestMain(m *testing.M) {
+	var (
+		f   *os.File
+		err error
+	)
+	if f, err = os.Open("./examples/yes-no-training.yaml"); err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	if err = yaml.NewDecoder(f).Decode(&testTrainingYesNo); err != nil {
+		log.Fatal(err)
+	}
+
+	os.Exit(m.Run())
+}
+
+func TestNew(t *testing.T) {
+	type args struct {
+		c Config
+	}
+
+	type teststruct struct {
+		name    string
+		args    args
+		wantErr bool
+	}
+
+	tests := []teststruct{
+		{
+			name: "empty",
+			args: args{
+				c: Config{},
+			},
+			wantErr: false,
+		},
+		{
+			name: "invalid ngram type",
+			args: args{
+				c: Config{
+					NGramType: "foobar",
+				},
+			},
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := New(tt.args.c)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("New() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+		})
+	}
+}
+
+func TestNewFromTrainingSet(t *testing.T) {
+	type args struct {
+		t TrainingSet
+	}
+
+	type teststruct struct {
+		name    string
+		args    args
+		wantErr bool
+	}
+
+	tests := []teststruct{
+		{
+			name: "invalid ngram type",
+			args: args{
+				t: TrainingSet{
+					Config: Config{
+						NGramType: "foobar",
+					},
+				},
+			},
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := NewFromTrainingSet(tt.args.t)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("New() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+		})
+	}
+}
 
 func TestBag_GetResults(t *testing.T) {
 	positiveNegative := SamplesByLabel{
@@ -22,65 +124,6 @@ func TestBag_GetResults(t *testing.T) {
 			"This is the worst thing ever.",
 			"I hate this so much.",
 			"Not good",
-		},
-	}
-
-	yesNo := SamplesByLabel{
-		"yes": {
-			"Yes",
-			"Yeah",
-			"Yep",
-			"Yup",
-			"Yea",
-			"Sure",
-			"Absolutely",
-			"Definitely",
-			"Of course",
-			"For sure",
-			"Indeed",
-			"Affirmative",
-			"Roger",
-			"Totally",
-			"Certainly",
-			"Without a doubt",
-			"You bet",
-			"Uh-huh",
-			"Right on",
-			"Cool",
-			"Okie dokie",
-			"Aye",
-			"Yass",
-			"Fo sho",
-			"Bet",
-			"10-4",
-		},
-		"no": {
-			"No",
-			"Nope",
-			"Nah",
-			"Nuh-uh",
-			"No way",
-			"Not at all",
-			"no",
-			"Not really",
-			"I don't think so",
-			"Absolutely not",
-			"No chance",
-			"No way, José",
-			"Out of the question",
-			"By no means",
-			"Under no circumstances",
-			"Never",
-			"Not in a million years",
-			"Not happening",
-			"No can do",
-			"Not on your life",
-			"Hell no",
-			"Nah fam",
-			"Pass",
-			"Hard pass",
-			"Nopey dopey",
-			"Nix",
 		},
 	}
 
@@ -127,9 +170,7 @@ func TestBag_GetResults(t *testing.T) {
 		{
 			name: "yes",
 			fields: fields{
-				t: TrainingSet{
-					Samples: yesNo,
-				},
+				t: testTrainingYesNo,
 			},
 			args: args{
 				in: "Oh yes.",
@@ -139,12 +180,7 @@ func TestBag_GetResults(t *testing.T) {
 		{
 			name: "no",
 			fields: fields{
-				t: TrainingSet{
-					Config: Config{
-						NGramSize: 1,
-					},
-					Samples: yesNo,
-				},
+				t: testTrainingYesNo,
 			},
 			args: args{
 				in: "Oh no.",
@@ -155,23 +191,39 @@ func TestBag_GetResults(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			b := NewFromTrainingSet(tt.fields.t)
+			b, err := NewFromTrainingSet(tt.fields.t)
+			if err != nil {
+				t.Fatal(err)
+			}
+
 			gotR := b.GetResults(tt.args.in).GetHighestProbability()
 			if gotR != tt.wantMatch {
-				t.Errorf("Bag.GetResults() = %v, want %v", gotR, tt.wantMatch)
+				t.Errorf("Bag.GetResults() = wrong value for <%v>: %v, want %v", tt.args.in, gotR, tt.wantMatch)
+				fmt.Printf("%+v\n", b.vocabByLabel)
+				fmt.Println(b.GetResults(tt.args.in))
 			}
 		})
 	}
 }
 
 func ExampleNew() {
-	var cfg Config
+	var (
+		cfg Config
+		err error
+	)
+
 	// Initialize with default values
-	exampleBag = New(cfg)
+	if exampleBag, err = New(cfg); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func ExampleNewFromTrainingSet() {
-	var t TrainingSet
+	var (
+		t   TrainingSet
+		err error
+	)
+
 	t.Samples = SamplesByLabel{
 		"positive": {
 			"I love this product, it is amazing!",
@@ -187,7 +239,9 @@ func ExampleNewFromTrainingSet() {
 	}
 
 	// Initialize with default values
-	exampleBag = NewFromTrainingSet(t)
+	if exampleBag, err = NewFromTrainingSet(t); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func ExampleBag_Train() {
