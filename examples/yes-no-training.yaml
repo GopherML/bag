@@ -1,6 +1,7 @@
 config:
-  ngram-size: 5
-  ngram-type: character
+  ngram-size: 1
+  ngram-type: word
+  smoothing-parameter: 1
 samples:
   yes:
     - "yes"
