@@ -1,6 +1,6 @@
 config:
-  ngram-size: 1
-  ngram-type: word
+  ngram-size: 2
+  ngram-type: character
   smoothing-parameter: 1
 samples:
   yes:
@@ -40,6 +40,7 @@ samples:
     - "Fo sho"
     - "Bet"
     - "Oh yes"
+    - "Yea bro"
 
   no:
     - "No"
@@ -76,3 +77,4 @@ samples:
     - "No siree"
     - "Nay"
     - "Negative"
+    - "No bro"
