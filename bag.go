@@ -2,25 +2,32 @@ package bag
 
 import "math"
 
-func New(c Config) *Bag {
+func New(c Config) (out *Bag, err error) {
+	// Validate Config
+	if err = c.Validate(); err != nil {
+		return
+	}
+
 	var b Bag
 	b.c = c
 	b.vocabByLabel = map[string]Vocabulary{}
 	b.countByLabel = map[string]int{}
-	// Fill unset values as default
-	b.c.fill()
-	return &b
+	out = &b
+	return
 }
 
-func NewFromTrainingSet(t TrainingSet) *Bag {
-	b := New(t.Config)
+func NewFromTrainingSet(t TrainingSet) (b *Bag, err error) {
+	if b, err = New(t.Config); err != nil {
+		return
+	}
+
 	for label, samples := range t.Samples {
 		for _, sample := range samples {
 			b.Train(sample, label)
 		}
 	}
 
-	return b
+	return
 }
 
 type Bag struct {
@@ -47,16 +54,23 @@ func (b *Bag) GetResults(in string) (r Results) {
 
 	return
 }
+func (b *Bag) toNGrams(in string) (ns []string) {
+	if b.c.NGramType == "word" {
+		return toNGrams(in, b.c.NGramSize)
+	}
+
+	return tocharacterNGrams(in, b.c.NGramSize)
+}
 
 func (b *Bag) Train(in, label string) {
 	// Convert inbound data to a slice of NGrams
-	ns := toNGrams(in, b.c.NGramSize)
+	ns := b.toNGrams(in)
 	// Get vocabulary for a provided label, if the vocabulary doesn't exist, it will be created)
 	v := b.getOrCreateVocabulary(label)
 	// Iterate through NGrams
 	for _, n := range ns {
 		// Increment the vocabulary value for the current NGram
-		v[n.String()]++
+		v[n]++
 	}
 
 	// Increment count of trained documents for the provided label
@@ -66,7 +80,7 @@ func (b *Bag) Train(in, label string) {
 }
 
 // getProbability uses a Naive Bayes classifier to determine probability for a given label
-func (b *Bag) getProbability(ns []NGram, label string, vocab Vocabulary) (probability float64) {
+func (b *Bag) getProbability(ns []string, label string, vocab Vocabulary) (probability float64) {
 	// Set initial probability value as the prior probability value
 	probability = b.getPriorProbability(label)
 	// Get the current counts by label (to be used by Laplace smoothing during for-loop)
@@ -75,7 +89,7 @@ func (b *Bag) getProbability(ns []NGram, label string, vocab Vocabulary) (probab
 	for _, n := range ns {
 		// Utilize Laplace smoothing to improve our results when an ngram isn't found within the trained dataset
 		// Likelihood with Laplace smoothing
-		count := float64(vocab[n.String()] + b.c.SmoothingParameter)
+		count := float64(vocab[n] + b.c.SmoothingParameter)
 		// Add logarithmic result of count (plus )
 		probability += math.Log(count / countsByLabel)
 	}
