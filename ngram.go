@@ -2,57 +2,57 @@ package bag
 
 import "bytes"
 
-// toNGrams will convert inbound data to an NGram of provided size
+// toNGrams will convert inbound data to an nGram of provided size
 func toNGrams(in string, size int) (ns []string) {
-	// Initialize NGram with a provided size
-	n := make(NGram, size)
+	// Initialize nGram with a provided size
+	n := make(nGram, size)
 	// Iterate inbound data as words
 	toWords(in, func(word string) {
-		// Append word to NGram
+		// Append word to nGram
 		n = n.Append(word)
 		if !n.IsFull() {
 			// NGram is not full - we do not want to append yet, return
 			return
 		}
 
-		// Append current NGram to NGrams slice
+		// Append current nGram to nGrams slice
 		ns = append(ns, n.String())
 	})
 
 	if !n.IsFull() && !n.IsZero() {
-		// The NGram is not full, so we haven't appended yet
-		// The NGram is not empty, so we have something to append
-		// Append current NGram to NGrams slice
+		// The nGram is not full, so we haven't appended yet
+		// The nGram is not empty, so we have something to append
+		// Append current nGram to nGrams slice
 		ns = append(ns, n.String())
 	}
 
 	return
 }
 
-// NGram represents an NGram (variable sized)
-type NGram []string
+// nGram represents an N-Gram (variable sized)
+type nGram []string
 
-// Append will append a given string to an NGram and output the new value
-// Note: The original NGram is NOT modified
-func (n NGram) Append(str string) (out NGram) {
-	// Initialize new NGram with the same size as the original NGram
-	out = make(NGram, len(n))
-	// Iterate through original NGram, starting at index 1
+// Append will append a given string to an nGram and output the new value
+// Note: The original nGram is NOT modified
+func (n nGram) Append(str string) (out nGram) {
+	// Initialize new nGram with the same size as the original nGram
+	out = make(nGram, len(n))
+	// Iterate through original nGram, starting at index 1
 	for i := 1; i < len(n); i++ {
-		// Set the value of the current original NGram index as the value for the previous index for the output NGram
+		// Set the value of the current original nGram index as the value for the previous index for the output nGram
 		out[i-1] = n[i]
 	}
 
-	// Set the last value of the output NGram as the input string
+	// Set the last value of the output nGram as the input string
 	out[len(n)-1] = str
 	return
 }
 
-// String will convert the NGram contents to a string
-func (n NGram) String() (out string) {
+// String will convert the nGram contents to a string
+func (n nGram) String() (out string) {
 	// Initialize buffer
 	buf := bytes.NewBuffer(nil)
-	// Iterate through NGram values
+	// Iterate through nGram values
 	n.iterate(func(value string) {
 		if buf.Len() > 0 {
 			// Buffer is not empty, prefix the iterating value with a space
@@ -67,21 +67,21 @@ func (n NGram) String() (out string) {
 	return buf.String()
 }
 
-// IsZero returns whether or not the NGram is empty
-func (n NGram) IsZero() bool {
+// IsZero returns whether or not the nGram is empty
+func (n nGram) IsZero() bool {
 	// Return result of if the value in the last position is empty
 	return len(n[len(n)-1]) == 0
 }
 
-// IsFull returns whether or not the NGram is full
-func (n NGram) IsFull() bool {
+// IsFull returns whether or not the nGram is full
+func (n nGram) IsFull() bool {
 	// Return result of if the value in the first position is populated
 	return len(n[0]) > 0
 }
 
-// iterate will iterate through the NGram values
-func (n NGram) iterate(fn func(word string)) {
-	// Iterate through NGram values
+// iterate will iterate through the nGram values
+func (n nGram) iterate(fn func(word string)) {
+	// Iterate through nGram values
 	for _, str := range n {
 		// Check if value is empty
 		if len(str) == 0 {

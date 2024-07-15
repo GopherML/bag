@@ -54,13 +54,6 @@ func (b *Bag) GetResults(in string) (r Results) {
 
 	return
 }
-func (b *Bag) toNGrams(in string) (ns []string) {
-	if b.c.NGramType == "word" {
-		return toNGrams(in, b.c.NGramSize)
-	}
-
-	return tocharacterNGrams(in, b.c.NGramSize)
-}
 
 func (b *Bag) Train(in, label string) {
 	// Convert inbound data to a slice of NGrams
@@ -73,16 +66,23 @@ func (b *Bag) Train(in, label string) {
 		v[n]++
 	}
 
-	// Increment count of trained documents for the provided label
-	b.countByLabel[label]++
-	// Increment total count of trained documents
-	b.totalCount++
+	// Increment model counters
+	b.incrementCounts(label)
+}
+
+// toNGrams converts the inbound string into n-grams based on the configuration settings
+func (b *Bag) toNGrams(in string) (ns []string) {
+	if b.c.NGramType == "word" {
+		return toNGrams(in, b.c.NGramSize)
+	}
+
+	return tocharacterNGrams(in, b.c.NGramSize)
 }
 
 // getProbability uses a Naive Bayes classifier to determine probability for a given label
 func (b *Bag) getProbability(ns []string, label string, vocab Vocabulary) (probability float64) {
 	// Set initial probability value as the prior probability value
-	probability = b.getPriorProbability(label)
+	probability = b.getLogPriorProbability(label)
 	// Get the current counts by label (to be used by Laplace smoothing during for-loop)
 	countsByLabel := float64(b.countByLabel[label]) + b.c.SmoothingParameter*float64(len(vocab))
 
@@ -98,7 +98,7 @@ func (b *Bag) getProbability(ns []string, label string, vocab Vocabulary) (proba
 	return
 }
 
-func (b *Bag) getPriorProbability(label string) (probability float64) {
+func (b *Bag) getLogPriorProbability(label string) (probability float64) {
 	count := float64(b.countByLabel[label])
 	total := float64(b.totalCount)
 	// Get the logarithmic value of count divided by total count
@@ -117,4 +117,11 @@ func (b *Bag) getOrCreateVocabulary(label string) (v Vocabulary) {
 	}
 
 	return
+}
+
+func (b *Bag) incrementCounts(label string) {
+	// Increment count of trained documents for the provided label
+	b.countByLabel[label]++
+	// Increment total count of trained documents
+	b.totalCount++
 }
