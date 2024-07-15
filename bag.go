@@ -82,7 +82,7 @@ func (b *Bag) Train(in, label string) {
 // getProbability uses a Naive Bayes classifier to determine probability for a given label
 func (b *Bag) getProbability(ns []string, label string, vocab Vocabulary) (probability float64) {
 	// Set initial probability value as the prior probability value
-	probability = b.getPriorProbability(label)
+	probability = b.getLogPriorProbability(label)
 	// Get the current counts by label (to be used by Laplace smoothing during for-loop)
 	countsByLabel := float64(b.countByLabel[label]) + b.c.SmoothingParameter*float64(len(vocab))
 
@@ -98,7 +98,7 @@ func (b *Bag) getProbability(ns []string, label string, vocab Vocabulary) (proba
 	return
 }
 
-func (b *Bag) getPriorProbability(label string) (probability float64) {
+func (b *Bag) getLogPriorProbability(label string) (probability float64) {
 	count := float64(b.countByLabel[label])
 	total := float64(b.totalCount)
 	// Get the logarithmic value of count divided by total count
