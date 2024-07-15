@@ -3,7 +3,7 @@ package bag
 import "bytes"
 
 // toNGrams will convert inbound data to an NGram of provided size
-func toNGrams(in string, size int) (ns []NGram) {
+func toNGrams(in string, size int) (ns []string) {
 	// Initialize NGram with a provided size
 	n := make(NGram, size)
 	// Iterate inbound data as words
@@ -16,14 +16,14 @@ func toNGrams(in string, size int) (ns []NGram) {
 		}
 
 		// Append current NGram to NGrams slice
-		ns = append(ns, n)
+		ns = append(ns, n.String())
 	})
 
 	if !n.IsFull() && !n.IsZero() {
 		// The NGram is not full, so we haven't appended yet
 		// The NGram is not empty, so we have something to append
 		// Append current NGram to NGrams slice
-		ns = append(ns, n)
+		ns = append(ns, n.String())
 	}
 
 	return

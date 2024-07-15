@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"os"
 
@@ -34,10 +33,12 @@ func main() {
 		return
 	}
 
-	fmt.Printf("TS: %+v\n", t)
-
 	a.interactivePrint("Training set loaded\n")
-	a.b = bag.NewFromTrainingSet(t)
+	if a.b, err = bag.NewFromTrainingSet(t); err != nil {
+		log.Fatalf("error initializing from training set: %v\n", err)
+		return
+	}
+
 	a.interactivePrint("Model generated\n")
 	a.interactivePrint("Interactive mode is active. Type your input and press Enter:\n")
 

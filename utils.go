@@ -23,3 +23,15 @@ func toWords(in string, onWord func(string)) {
 		buf.Reset()
 	}
 }
+
+func toCharacters(in string, onChar func(rune)) {
+	for _, char := range in {
+		switch {
+		case unicode.IsLetter(char):
+			char = unicode.ToLower(char)
+			onChar(char)
+		case unicode.IsSpace(char):
+			onChar(char)
+		}
+	}
+}
