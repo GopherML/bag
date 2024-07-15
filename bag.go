@@ -54,13 +54,6 @@ func (b *Bag) GetResults(in string) (r Results) {
 
 	return
 }
-func (b *Bag) toNGrams(in string) (ns []string) {
-	if b.c.NGramType == "word" {
-		return toNGrams(in, b.c.NGramSize)
-	}
-
-	return tocharacterNGrams(in, b.c.NGramSize)
-}
 
 func (b *Bag) Train(in, label string) {
 	// Convert inbound data to a slice of NGrams
@@ -77,6 +70,15 @@ func (b *Bag) Train(in, label string) {
 	b.countByLabel[label]++
 	// Increment total count of trained documents
 	b.totalCount++
+}
+
+// toNGrams converts the inbound string into n-grams based on the configuration settings
+func (b *Bag) toNGrams(in string) (ns []string) {
+	if b.c.NGramType == "word" {
+		return toNGrams(in, b.c.NGramSize)
+	}
+
+	return tocharacterNGrams(in, b.c.NGramSize)
 }
 
 // getProbability uses a Naive Bayes classifier to determine probability for a given label
