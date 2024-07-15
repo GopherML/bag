@@ -66,10 +66,8 @@ func (b *Bag) Train(in, label string) {
 		v[n]++
 	}
 
-	// Increment count of trained documents for the provided label
-	b.countByLabel[label]++
-	// Increment total count of trained documents
-	b.totalCount++
+	// Increment model counters
+	b.incrementCounts(label)
 }
 
 // toNGrams converts the inbound string into n-grams based on the configuration settings
@@ -119,4 +117,11 @@ func (b *Bag) getOrCreateVocabulary(label string) (v Vocabulary) {
 	}
 
 	return
+}
+
+func (b *Bag) incrementCounts(label string) {
+	// Increment count of trained documents for the provided label
+	b.countByLabel[label]++
+	// Increment total count of trained documents
+	b.totalCount++
 }
