@@ -5,7 +5,3 @@ type TrainingSet struct {
 
 	Samples SamplesByLabel `yaml:"samples"`
 }
-
-type SamplesByLabel map[string]Samples
-
-type Samples []string
