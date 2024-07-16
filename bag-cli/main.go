@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/GopherML/bag"
 	"github.com/go-yaml/yaml"
-	"github.com/itsmontoya/bag"
 )
 
 func main() {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/itsmontoya/bag"
+	"github.com/GopherML/bag"
 )
 
 type app struct {
