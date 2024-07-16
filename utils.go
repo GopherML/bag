@@ -12,9 +12,11 @@ func toWords(in string, onWord func(string)) {
 		switch {
 		case unicode.IsLetter(char):
 			char = unicode.ToLower(char)
-			if c.Len() == 0 || c.ForEach(func(r rune) (end bool) {
+			isMatch := func(r rune) (end bool) {
 				return r != char
-			}) {
+			}
+
+			if c.Len() < 2 || c.ForEach(isMatch) {
 				buf.WriteRune(char)
 				c.Shift(char)
 			}
