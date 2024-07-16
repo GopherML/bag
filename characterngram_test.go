@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func Test_tocharacterNGrams(t *testing.T) {
+func Test_toCharacterNGrams(t *testing.T) {
 	type args struct {
 		in   string
 		size int
@@ -61,8 +61,8 @@ func Test_tocharacterNGrams(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if gotNs := tocharacterNGrams(tt.args.in, tt.args.size); !reflect.DeepEqual(gotNs, tt.wantNs) {
-				t.Errorf("tocharacterNGrams() = \n%v\n, want \n%v", gotNs, tt.wantNs)
+			if gotNs := toCharacterNGrams(tt.args.in, tt.args.size); !reflect.DeepEqual(gotNs, tt.wantNs) {
+				t.Errorf("toCharacterNGrams() = \n%v\n, want \n%v", gotNs, tt.wantNs)
 			}
 		})
 	}
