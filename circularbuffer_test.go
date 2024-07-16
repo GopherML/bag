@@ -235,29 +235,3 @@ func Test_circularBuffer_Len(t *testing.T) {
 		})
 	}
 }
-
-func Test_newCircularBuffer(t *testing.T) {
-	type args struct {
-		capacity int
-	}
-	tests := []struct {
-		name string
-		args args
-	}{
-		{
-			name: "basic",
-			args: args{
-				capacity: 3,
-			},
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			c := newCircularBuffer[string](tt.args.capacity)
-			if got := c.Cap(); got != tt.args.capacity {
-				t.Errorf("newCircularBuffer().Capacity = %v, want %v", got, tt.args.capacity)
-			}
-		})
-	}
-}

@@ -57,7 +57,3 @@ func (c *circularBuffer[T]) ForEach(fn func(t T) (end bool)) (ended bool) {
 func (c *circularBuffer[T]) Len() int {
 	return c.len
 }
-
-func (c *circularBuffer[T]) Cap() int {
-	return c.cap
-}
