@@ -39,7 +39,7 @@ func Test_toNGrams(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if gotNs := toNGrams(tt.args.in, tt.args.size); !reflect.DeepEqual(gotNs, tt.wantNs) {
-				t.Errorf("toNGrams() = %v, want %v", gotNs, tt.wantNs)
+				t.Errorf("toNGrams() = \n%v,\n want \n%v", gotNs, tt.wantNs)
 			}
 		})
 	}
