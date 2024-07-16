@@ -2,8 +2,8 @@ package bag
 
 import "bytes"
 
-// tocharacterNGrams will convert inbound data to an characterNGram of provided size
-func tocharacterNGrams(in string, size int) (ns []string) {
+// toCharacterNGrams will convert inbound data to an characterNGram of provided size
+func toCharacterNGrams(in string, size int) (ns []string) {
 	var c characterNGram
 	// Initialize characterNGram with a provided size
 	c.circularBuffer = newCircularBuffer[rune](size)

@@ -76,7 +76,7 @@ func (b *Bag) toNGrams(in string) (ns []string) {
 		return toNGrams(in, b.c.NGramSize)
 	}
 
-	return tocharacterNGrams(in, b.c.NGramSize)
+	return toCharacterNGrams(in, b.c.NGramSize)
 }
 
 // getProbability uses a Naive Bayes classifier to determine probability for a given label

@@ -267,7 +267,7 @@ func Benchmark_toCharacterNGrams(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		for _, tc := range tests {
-			ngramsSink = tocharacterNGrams(tc.args.in, tc.args.size)
+			ngramsSink = toCharacterNGrams(tc.args.in, tc.args.size)
 		}
 	}
 }
