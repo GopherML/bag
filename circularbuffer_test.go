@@ -235,3 +235,39 @@ func Test_circularBuffer_Len(t *testing.T) {
 		})
 	}
 }
+
+func Benchmark_toCharacterNGrams(b *testing.B) {
+	type args struct {
+		in   string
+		size int
+	}
+
+	type testcase struct {
+		name   string
+		args   args
+		wantNs []string
+	}
+
+	tests := []testcase{
+		{
+			name: "basic",
+			args: args{
+				in:   "hello world! This is really cool, wowo",
+				size: 3,
+			},
+			wantNs: []string{
+				"hello world this",
+				"world this is",
+				"this is really",
+				"is really cool",
+				"really cool wowo",
+			},
+		},
+	}
+
+	for i := 0; i < b.N; i++ {
+		for _, tc := range tests {
+			ngramsSink = tocharacterNGrams(tc.args.in, tc.args.size)
+		}
+	}
+}
