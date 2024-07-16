@@ -7,11 +7,20 @@ import (
 
 func toWords(in string, onWord func(string)) {
 	buf := bytes.NewBuffer(nil)
+	c := newCircularBuffer[rune](2)
 	for _, char := range in {
 		switch {
 		case unicode.IsLetter(char):
 			char = unicode.ToLower(char)
-			buf.WriteRune(char)
+			isMatch := func(r rune) (end bool) {
+				return r != char
+			}
+
+			if c.Len() < 2 || c.ForEach(isMatch) {
+				buf.WriteRune(char)
+				c.Shift(char)
+			}
+
 		case unicode.IsSpace(char):
 			onWord(buf.String())
 			buf.Reset()

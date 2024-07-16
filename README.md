@@ -89,7 +89,7 @@ samples:
 - [X] Working implementation as Go library
 - [X] Training sets
 - [X] Support Character NGrams
-- [ ] Text normalization added to inbound text processing
+- [X] Text normalization added to inbound text processing
 - [X] CLI utility
 
 ## Long term goals
