@@ -4,6 +4,9 @@ Bag is a `bag of words` (`BoW`) implementation written in Go, utilizing a Naive 
 ## What is Bag of Words (BoW)?
 The `bag of words` (`BoW`) model is a fundamental text representation technique in `natural language processing` (`NLP`). In this model, a text (such as a sentence or a document) is represented as an unordered collection of words, disregarding grammar and word order but keeping multiplicity. The key idea is to create a vocabulary of all the unique words in the text corpus and then represent each text by a vector of word frequencies or binary indicators. This vector indicates the presence or absence, or frequency, of each word from the vocabulary within the text. The `BoW` model is widely used for text classification tasks, including `sentiment analysis`, due to its simplicity and effectiveness in capturing word occurrences.
 
+## Demo
+<img src="https://github.com/GopherML/bag/blob/main/demo/demo.gif?raw=true" />
+
 ## Examples
 ### New
 ```go
