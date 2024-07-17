@@ -1,4 +1,4 @@
-Set FontSize 24
+Set FontSize 16
 Set Width 840
 Set Height 400
 
