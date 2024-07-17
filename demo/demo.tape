@@ -1,7 +1,6 @@
-# Set up a 1200x600 terminal with 46px font.
-Set FontSize 46
-Set Width 1200
-Set Height 600
+Set FontSize 24
+Set Width 840
+Set Height 400
 
 Sleep 1s
 Type "./bag-cli --training ../examples/yes-no-training.yaml --interactive"
