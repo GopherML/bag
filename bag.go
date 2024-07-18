@@ -2,6 +2,7 @@ package bag
 
 import "math"
 
+// New will initialize and return a new Bag with a provided configuration
 func New(c Config) (out *Bag, err error) {
 	// Validate Config
 	if err = c.Validate(); err != nil {
@@ -16,6 +17,7 @@ func New(c Config) (out *Bag, err error) {
 	return
 }
 
+// NewFromTrainingSet will initialize and return a new pre-trained Bag from a provided training set
 func NewFromTrainingSet(t TrainingSet) (b *Bag, err error) {
 	if b, err = New(t.Config); err != nil {
 		return
@@ -28,6 +30,16 @@ func NewFromTrainingSet(t TrainingSet) (b *Bag, err error) {
 	}
 
 	return
+}
+
+// NewFromTrainingSetFile will initialize and return a new pre-trained Bag from a provided training set filepath
+func NewFromTrainingSetFile(filepath string) (b *Bag, err error) {
+	var t TrainingSet
+	if t, err = makeTrainingSetFromFile(filepath); err != nil {
+		return
+	}
+
+	return NewFromTrainingSet(t)
 }
 
 type Bag struct {
