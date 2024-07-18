@@ -23,6 +23,7 @@ type Config struct {
 func (c *Config) Validate() (err error) {
 	c.fill()
 
+	// Check to see if n-gram type is supported
 	switch c.NGramType {
 	case "word":
 	case "character":

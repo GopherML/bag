@@ -20,11 +20,15 @@ func New(c Config) (out *Bag, err error) {
 // NewFromTrainingSet will initialize and return a new pre-trained Bag from a provided training set
 func NewFromTrainingSet(t TrainingSet) (b *Bag, err error) {
 	if b, err = New(t.Config); err != nil {
+		// Error initializing, return
 		return
 	}
 
+	// Train with provided samples, iterate over samples by label
 	for label, samples := range t.Samples {
+		// For each within samples slice
 		for _, sample := range samples {
+			// Train for a given sample and label
 			b.Train(sample, label)
 		}
 	}
@@ -35,10 +39,13 @@ func NewFromTrainingSet(t TrainingSet) (b *Bag, err error) {
 // NewFromTrainingSetFile will initialize and return a new pre-trained Bag from a provided training set filepath
 func NewFromTrainingSetFile(filepath string) (b *Bag, err error) {
 	var t TrainingSet
+	// Make new training set
 	if t, err = makeTrainingSetFromFile(filepath); err != nil {
+		// Error making training set, return
 		return
 	}
 
+	// Create new Bag from training set
 	return NewFromTrainingSet(t)
 }
 
