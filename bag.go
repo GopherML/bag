@@ -2,6 +2,7 @@ package bag
 
 import "math"
 
+// New will initialize and return a new Bag with a provided configuration
 func New(c Config) (out *Bag, err error) {
 	// Validate Config
 	if err = c.Validate(); err != nil {
@@ -11,18 +12,23 @@ func New(c Config) (out *Bag, err error) {
 	var b Bag
 	b.c = c
 	b.vocabByLabel = map[string]Vocabulary{}
-	b.countByLabel = map[string]int{}
+	b.documentCountByLabel = map[string]int{}
 	out = &b
 	return
 }
 
+// NewFromTrainingSet will initialize and return a new pre-trained Bag from a provided training set
 func NewFromTrainingSet(t TrainingSet) (b *Bag, err error) {
 	if b, err = New(t.Config); err != nil {
+		// Error initializing, return
 		return
 	}
 
+	// Train with provided samples, iterate over samples by label
 	for label, samples := range t.Samples {
+		// For each within samples slice
 		for _, sample := range samples {
+			// Train for a given sample and label
 			b.Train(sample, label)
 		}
 	}
@@ -30,17 +36,32 @@ func NewFromTrainingSet(t TrainingSet) (b *Bag, err error) {
 	return
 }
 
+// NewFromTrainingSetFile will initialize and return a new pre-trained Bag from a provided training set filepath
+func NewFromTrainingSetFile(filepath string) (b *Bag, err error) {
+	var t TrainingSet
+	// Make new training set
+	if t, err = makeTrainingSetFromFile(filepath); err != nil {
+		// Error making training set, return
+		return
+	}
+
+	// Create new Bag from training set
+	return NewFromTrainingSet(t)
+}
+
+// Bag represents a bag of words (BoW) model
 type Bag struct {
 	// Configuration values
 	c Config
 	// Vocabulary sets by label
 	vocabByLabel map[string]Vocabulary
 	// Count of trained documents by label
-	countByLabel map[string]int
+	documentCountByLabel map[string]int
 	// Total count of trained documents
-	totalCount int
+	totalDocumentCount int
 }
 
+// GetResults will return the classification results for a given input string
 func (b *Bag) GetResults(in string) (r Results) {
 	// Convert inbound data to NGrams
 	ns := b.toNGrams(in)
@@ -55,6 +76,7 @@ func (b *Bag) GetResults(in string) (r Results) {
 	return
 }
 
+// Train will process a given input string and assign it the provided label for training
 func (b *Bag) Train(in, label string) {
 	// Convert inbound data to a slice of NGrams
 	ns := b.toNGrams(in)
@@ -73,9 +95,11 @@ func (b *Bag) Train(in, label string) {
 // toNGrams converts the inbound string into n-grams based on the configuration settings
 func (b *Bag) toNGrams(in string) (ns []string) {
 	if b.c.NGramType == "word" {
+		// NGram type is word, use n-grams
 		return toNGrams(in, b.c.NGramSize)
 	}
 
+	// NGram type is character, use character n-grams
 	return toCharacterNGrams(in, b.c.NGramSize)
 }
 
@@ -84,7 +108,7 @@ func (b *Bag) getProbability(ns []string, label string, vocab Vocabulary) (proba
 	// Set initial probability value as the prior probability value
 	probability = b.getLogPriorProbability(label)
 	// Get the current counts by label (to be used by Laplace smoothing during for-loop)
-	countsByLabel := float64(b.countByLabel[label]) + b.c.SmoothingParameter*float64(len(vocab))
+	countsByLabel := float64(b.documentCountByLabel[label]) + b.c.SmoothingParameter*float64(len(vocab))
 
 	// Iterate through NGrams
 	for _, n := range ns {
@@ -98,15 +122,21 @@ func (b *Bag) getProbability(ns []string, label string, vocab Vocabulary) (proba
 	return
 }
 
+// getLogPriorProbability will get the starting probability value for a given label
 func (b *Bag) getLogPriorProbability(label string) (probability float64) {
-	count := float64(b.countByLabel[label])
-	total := float64(b.totalCount)
+	// Document count for the given label
+	countByLabel := float64(b.documentCountByLabel[label])
+	// Total document count
+	total := float64(b.totalDocumentCount)
 	// Get the logarithmic value of count divided by total count
-	return math.Log(count / total)
+	return math.Log(countByLabel / total)
 }
 
+// getOrCreate vocabulary will get a vocabulary set for a given label,
+// if the vocabulary doesn't exist - it is created
 func (b *Bag) getOrCreateVocabulary(label string) (v Vocabulary) {
 	var ok bool
+	// Attempt to get vocabulary for the given label
 	v, ok = b.vocabByLabel[label]
 	// Check if vocabulary set does not exist for the provided label
 	if !ok {
@@ -119,9 +149,10 @@ func (b *Bag) getOrCreateVocabulary(label string) (v Vocabulary) {
 	return
 }
 
+// incrementCounts will increment trained documents count globally and by label
 func (b *Bag) incrementCounts(label string) {
 	// Increment count of trained documents for the provided label
-	b.countByLabel[label]++
+	b.documentCountByLabel[label]++
 	// Increment total count of trained documents
-	b.totalCount++
+	b.totalDocumentCount++
 }

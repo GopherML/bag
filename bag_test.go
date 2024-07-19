@@ -5,8 +5,6 @@ import (
 	"log"
 	"os"
 	"testing"
-
-	"github.com/go-yaml/yaml"
 )
 
 var (
@@ -19,16 +17,8 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	var (
-		f   *os.File
-		err error
-	)
-	if f, err = os.Open("./examples/yes-no-training.yaml"); err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
-
-	if err = yaml.NewDecoder(f).Decode(&testTrainingYesNo); err != nil {
+	var err error
+	if testTrainingYesNo, err = makeTrainingSetFromFile("./examples/yes-no-training.yaml"); err != nil {
 		log.Fatal(err)
 	}
 
@@ -106,6 +96,61 @@ func TestNewFromTrainingSet(t *testing.T) {
 			_, err := NewFromTrainingSet(tt.args.t)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("New() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+		})
+	}
+}
+
+func TestNewFromTrainingSetFile(t *testing.T) {
+	type args struct {
+		filepath string
+	}
+
+	type teststruct struct {
+		name string
+		args args
+
+		wantConfig Config
+		wantErr    bool
+	}
+
+	tests := []teststruct{
+		{
+			name: "basic",
+			args: args{
+				filepath: "./examples/yes-no-training.yaml",
+			},
+			wantConfig: Config{
+				NGramSize:          2,
+				NGramType:          "character",
+				SmoothingParameter: 1,
+			},
+			wantErr: false,
+		},
+		{
+			name: "no file",
+			args: args{
+				filepath: "./examples/no_exists.yaml",
+			},
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			b, err := NewFromTrainingSetFile(tt.args.filepath)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("New() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+
+			if err != nil {
+				return
+			}
+
+			if b.c != tt.wantConfig {
+				t.Errorf("New() bag.Config = %+v, wantConfig %+v", b.c, tt.wantConfig)
 				return
 			}
 		})
