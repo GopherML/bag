@@ -115,7 +115,7 @@ func (b *Bag) getProbability(ns []string, label string, vocab Vocabulary) (proba
 		// Utilize Laplace smoothing to improve our results when an ngram isn't found within the trained dataset
 		// Likelihood with Laplace smoothing
 		count := float64(vocab[n]) + b.c.SmoothingParameter
-		// Add logarithmic result of count (plus )
+		// Add logarithmic result of count divided by counts by label
 		probability += math.Log(count / countsByLabel)
 	}
 
