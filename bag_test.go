@@ -294,7 +294,7 @@ func ExampleBag_Train() {
 	exampleBag.Train("I am very happy with this.", "positive")
 	exampleBag.Train("I hate this so much.", "negative")
 	exampleBag.Train("Not good", "negative")
-	exampleBag.Train("Very good", "negative")
+	exampleBag.Train("Very good", "positive")
 }
 
 func ExampleBag_GetResults() {
