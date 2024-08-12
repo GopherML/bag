@@ -25,6 +25,15 @@
       "contributions": [
         "design"
       ]
+    },
+    {
+      "login": "chewxy",
+      "name": "Chewxy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/471890?v=4",
+      "profile": "http://twitter.com/chewxy",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
