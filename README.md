@@ -2,7 +2,7 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-Bag is a `bag of words` (`BoW`) implementation written in Go, utilizing a Naive Bayes classifier. Currently, it functions as a library that can be integrated into Go code. The goal is to offer a file format that provides bag of words functionality as code. In the future, it will be usable as a command line tool, allowing it to be called from any programming language.
+**Bag** is a powerful yet user-friendly `bag of words` (`BoW`) implementation written in Go, leveraging a Naive Bayes classifier for efficient text analysis. It functions both as a library that can be seamlessly integrated into Go code and as an accessible command line tool. This dual functionality allows users to leverage bag of words capabilities directly from the command line, making it accessible from any programming language. The implementation supports a file format that facilitates using bag of words functionality as code, designed for ease of use and flexible integration in various environments.
 
 ![billboard](https://github.com/GopherML/bag/blob/main/bag-billboard.png?raw=true "Bag billboard")
 
