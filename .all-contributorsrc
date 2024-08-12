@@ -34,6 +34,15 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "jbmuir",
+      "name": "Jack Muir",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18120453?v=4",
+      "profile": "http://jbmuir.github.io",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
