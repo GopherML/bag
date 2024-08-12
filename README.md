@@ -1,6 +1,6 @@
 # Bag [![GoDoc](https://godoc.org/github.com/GopherML/bag?status.svg)](https://godoc.org/github.com/GopherML/bag) ![Status](https://img.shields.io/badge/status-beta-yellow.svg) [![Go Report Card](https://goreportcard.com/badge/github.com/GopherML/bag)](https://goreportcard.com/report/github.com/GopherML/bag) ![Go Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 Bag is a `bag of words` (`BoW`) implementation written in Go, utilizing a Naive Bayes classifier. Currently, it functions as a library that can be integrated into Go code. The goal is to offer a file format that provides bag of words functionality as code. In the future, it will be usable as a command line tool, allowing it to be called from any programming language.
 
@@ -115,6 +115,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/itsmontoya"><img src="https://avatars.githubusercontent.com/u/928954?v=4?s=100" width="100px;" alt="Josh Montoya"/><br /><sub><b>Josh Montoya</b></sub></a><br /><a href="https://github.com/GopherML/bag/commits?author=itsmontoya" title="Code">💻</a> <a href="https://github.com/GopherML/bag/commits?author=itsmontoya" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://mattstay.com"><img src="https://avatars.githubusercontent.com/u/414740?v=4?s=100" width="100px;" alt="Matt Stay"/><br /><sub><b>Matt Stay</b></sub></a><br /><a href="#design-matthew-stay" title="Design">🎨</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://twitter.com/chewxy"><img src="https://avatars.githubusercontent.com/u/471890?v=4?s=100" width="100px;" alt="Chewxy"/><br /><sub><b>Chewxy</b></sub></a><br /><a href="https://github.com/GopherML/bag/commits?author=chewxy" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://jbmuir.github.io"><img src="https://avatars.githubusercontent.com/u/18120453?v=4?s=100" width="100px;" alt="Jack Muir"/><br /><sub><b>Jack Muir</b></sub></a><br /><a href="https://github.com/GopherML/bag/commits?author=jbmuir" title="Tests">⚠️</a></td>
     </tr>
   </tbody>
 </table>
