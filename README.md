@@ -1,4 +1,7 @@
 # Bag [![GoDoc](https://godoc.org/github.com/GopherML/bag?status.svg)](https://godoc.org/github.com/GopherML/bag) ![Status](https://img.shields.io/badge/status-beta-yellow.svg) [![Go Report Card](https://goreportcard.com/badge/github.com/GopherML/bag)](https://goreportcard.com/report/github.com/GopherML/bag) ![Go Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 Bag is a `bag of words` (`BoW`) implementation written in Go, utilizing a Naive Bayes classifier. Currently, it functions as a library that can be integrated into Go code. The goal is to offer a file format that provides bag of words functionality as code. In the future, it will be usable as a command line tool, allowing it to be called from any programming language.
 
 ![billboard](https://github.com/GopherML/bag/blob/main/bag-billboard.png?raw=true "Bag billboard")
@@ -99,3 +102,24 @@ samples:
 
 ## Long term goals
 - [ ] Generated model as MMAP file
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/itsmontoya"><img src="https://avatars.githubusercontent.com/u/928954?v=4?s=100" width="100px;" alt="Josh Montoya"/><br /><sub><b>Josh Montoya</b></sub></a><br /><a href="https://github.com/GopherML/bag/commits?author=itsmontoya" title="Code">💻</a> <a href="https://github.com/GopherML/bag/commits?author=itsmontoya" title="Documentation">📖</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
