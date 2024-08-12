@@ -16,6 +16,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "matthew-stay",
+      "name": "Matt Stay",
+      "avatar_url": "https://avatars.githubusercontent.com/u/414740?v=4",
+      "profile": "http://mattstay.com",
+      "contributions": [
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 7,
