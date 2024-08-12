@@ -1,4 +1,4 @@
-# Bag [![GoDoc](https://godoc.org/github.com/GopherML/bag?status.svg)](https://godoc.org/github.com/GopherML/bag) ![Status](https://img.shields.io/badge/status-beta-yellow.svg) [![Go Report Card](https://goreportcard.com/badge/github.com/GopherML/bag)](https://goreportcard.com/report/github.com/GopherML/bag) ![Go Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
+# Bag [![GoDoc](https://godoc.org/github.com/GopherML/bag?status.svg)](https://godoc.org/github.com/GopherML/bag) ![Status](https://img.shields.io/badge/status-stable-brightgreen.svg) [![Go Report Card](https://goreportcard.com/badge/github.com/GopherML/bag)](https://goreportcard.com/report/github.com/GopherML/bag) ![Go Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
